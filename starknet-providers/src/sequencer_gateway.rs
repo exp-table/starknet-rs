@@ -13,6 +13,7 @@ use starknet_core::{
         InvokeFunctionTransactionRequest, StarknetError, StateUpdate, TransactionInfo,
         TransactionReceipt, TransactionRequest, TransactionStatusInfo, TransactionTrace,
     },
+    chain_id
 };
 use thiserror::Error;
 use url::Url;
@@ -21,6 +22,7 @@ pub struct SequencerGatewayProvider {
     client: Client,
     gateway_url: Url,
     feeder_gateway_url: Url,
+    chain_id: FieldElement
 }
 
 #[derive(Debug, Error)]
@@ -36,11 +38,12 @@ pub enum ProviderError {
 }
 
 impl SequencerGatewayProvider {
-    pub fn new(gateway_url: impl Into<Url>, feeder_gateway_url: impl Into<Url>) -> Self {
+    pub fn new(gateway_url: impl Into<Url>, feeder_gateway_url: impl Into<Url>, chain_id: FieldElement) -> Self {
         Self {
             client: Client::new(),
             gateway_url: gateway_url.into(),
             feeder_gateway_url: feeder_gateway_url.into(),
+            chain_id: chain_id
         }
     }
 
@@ -48,6 +51,7 @@ impl SequencerGatewayProvider {
         Self::new(
             Url::parse("https://alpha-mainnet.starknet.io/gateway").unwrap(),
             Url::parse("https://alpha-mainnet.starknet.io/feeder_gateway").unwrap(),
+            chain_id::MAINNET
         )
     }
 
@@ -55,6 +59,7 @@ impl SequencerGatewayProvider {
         Self::new(
             Url::parse("https://alpha4.starknet.io/gateway").unwrap(),
             Url::parse("https://alpha4.starknet.io/feeder_gateway").unwrap(),
+            chain_id::TESTNET
         )
     }
 }
