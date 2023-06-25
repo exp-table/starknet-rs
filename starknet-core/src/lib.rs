@@ -2,6 +2,9 @@
 #![allow(clippy::comparison_chain)]
 #![doc = include_str!("../README.md")]
 
+#[cfg(all(not(feature = "std"), any(test, feature = "alloc")))]
+extern crate alloc;
+
 pub mod serde;
 
 pub mod types;

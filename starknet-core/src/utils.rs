@@ -7,6 +7,9 @@ use sha3::{Digest, Keccak256};
 use starknet_crypto::pedersen_hash;
 use thiserror::Error;
 
+#[cfg(not(feature = "std"))]
+use alloc::string::String;
+
 const DEFAULT_ENTRY_POINT_NAME: &str = "__default__";
 const DEFAULT_L1_ENTRY_POINT_NAME: &str = "__l1_default__";
 
