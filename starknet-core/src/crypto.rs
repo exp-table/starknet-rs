@@ -1,26 +1,8 @@
-use crate::types::FieldElement;
+use crate::{types::FieldElement, EcdsaSignError, EcdsaVerifyError};
 
 pub use starknet_crypto::{pedersen_hash, ExtendedSignature, Signature};
 use starknet_crypto::{rfc6979_generate_k, sign, verify, SignError, VerifyError};
 use thiserror::Error;
-
-#[derive(Debug, Error)]
-pub enum EcdsaSignError {
-    #[error("message hash out of range")]
-    MessageHashOutOfRange,
-}
-
-#[derive(Debug, Error)]
-pub enum EcdsaVerifyError {
-    #[error("message hash out of range")]
-    MessageHashOutOfRange,
-    #[error("invalid public key")]
-    InvalidPublicKey,
-    #[error("signature r value out of range")]
-    SignatureROutOfRange,
-    #[error("signature s value out of range")]
-    SignatureSOutOfRange,
-}
 
 pub fn compute_hash_on_elements(data: &[FieldElement]) -> FieldElement {
     let mut current_hash = FieldElement::ZERO;

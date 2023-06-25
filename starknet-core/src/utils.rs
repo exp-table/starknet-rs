@@ -1,4 +1,7 @@
-use crate::{crypto::compute_hash_on_elements, types::FieldElement};
+use crate::{
+    crypto::compute_hash_on_elements, types::FieldElement, CairoShortStringToFeltError,
+    NonAsciiNameError, ParseCairoShortStringError,
+};
 
 use sha3::{Digest, Keccak256};
 use starknet_crypto::pedersen_hash;
@@ -34,26 +37,6 @@ pub enum UdcUniqueness {
 pub struct UdcUniqueSettings {
     pub deployer_address: FieldElement,
     pub udc_contract_address: FieldElement,
-}
-
-#[derive(Debug, Error)]
-#[error("the provided name contains non-ASCII characters")]
-pub struct NonAsciiNameError;
-
-#[derive(Debug, Error)]
-pub enum CairoShortStringToFeltError {
-    #[error("Cairo string can only contain ASCII characters")]
-    NonAsciiCharacter,
-    #[error("short string exceeds maximum length of 31 characters")]
-    StringTooLong,
-}
-
-#[derive(Debug, Error)]
-pub enum ParseCairoShortStringError {
-    #[error("field element value out of range")]
-    ValueOutOfRange,
-    #[error("unexpected null terminator")]
-    UnexpectedNullTerminator,
 }
 
 /// A variant of eth-keccak that computes a value that fits in a Starknet field element.
