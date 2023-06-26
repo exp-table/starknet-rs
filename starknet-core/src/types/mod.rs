@@ -3,6 +3,11 @@ use serde_with::serde_as;
 
 use crate::serde::unsigned_field_element::UfeHex;
 
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
+use alloc::{string::String, vec::Vec};
+
 // Re-export commonly used upstream types
 pub use ethereum_types::Address as L1Address;
 

@@ -3,6 +3,11 @@ use serde_with::{DeserializeAs, SerializeAs};
 
 use crate::types::FieldElement;
 
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
+use alloc::string::String;
+
 pub struct UfeHex;
 
 pub struct UfeHexOption;

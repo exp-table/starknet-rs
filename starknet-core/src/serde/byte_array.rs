@@ -1,6 +1,10 @@
 pub mod base64 {
     use base64::{engine::general_purpose::STANDARD, Engine};
     use serde::{Deserialize, Deserializer, Serializer};
+    #[cfg(not(feature = "std"))]
+    extern crate alloc;
+    #[cfg(not(feature = "std"))]
+    use alloc::{string::String, vec::Vec};
 
     pub fn serialize<S, T>(value: T, serializer: S) -> Result<S::Ok, S::Error>
     where

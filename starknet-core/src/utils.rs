@@ -8,6 +8,8 @@ use starknet_crypto::pedersen_hash;
 use thiserror::Error;
 
 #[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
 use alloc::string::String;
 
 const DEFAULT_ENTRY_POINT_NAME: &str = "__default__";

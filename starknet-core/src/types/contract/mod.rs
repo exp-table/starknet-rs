@@ -2,12 +2,16 @@ use serde::{ser::SerializeSeq, Deserialize, Deserializer, Serialize, Serializer}
 use serde_with::serde_as;
 use starknet_crypto::{poseidon_hash_many, PoseidonHasher};
 
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
+use alloc::{string::String, vec::Vec};
+
 use crate::{
+    error::CairoShortStringToFeltError,
     serde::{json::to_string_pythonic, unsigned_field_element::UfeHex},
     types::{EntryPointsByType, FieldElement, FlattenedSierraClass, SierraEntryPoint},
-    utils::{
-        cairo_short_string_to_felt, normalize_address, starknet_keccak, CairoShortStringToFeltError,
-    },
+    utils::{cairo_short_string_to_felt, normalize_address, starknet_keccak},
 };
 
 /// Module containing types related to artifacts of contracts compiled with a Cairo 0.x compiler.

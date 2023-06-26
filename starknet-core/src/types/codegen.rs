@@ -18,10 +18,13 @@
 // - `TXN`
 // - `TXN_RECEIPT`
 
-use std::sync::Arc;
-
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde_with::serde_as;
+
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
+use alloc::{sync::Arc, vec::Vec};
 
 use crate::{
     serde::{byte_array::base64, unsigned_field_element::UfeHex},

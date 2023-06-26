@@ -18,6 +18,11 @@ use serde::{
 use serde_with::{serde_as, SerializeAs};
 use std::{collections::BTreeMap, io::Write};
 
+#[cfg(not(feature = "std"))]
+extern crate alloc;
+#[cfg(not(feature = "std"))]
+use alloc::{boxed::Box, string::String, vec::Vec};
+
 const API_VERSION: FieldElement = FieldElement::ZERO;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
